@@ -1,6 +1,9 @@
 pub mod document;
+pub mod inspect;
 pub mod merge;
 pub mod output;
+pub mod pack;
+pub mod progress;
 pub mod scanner;
 pub mod splitter;
 pub mod token;

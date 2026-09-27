@@ -18,6 +18,16 @@ impl TokenCounter {
     }
 
     pub fn count(&self, text: &str) -> usize {
-        self.tokenizer.encode_with_special_tokens(text).len()
+        self.encode(text).len()
+    }
+
+    pub fn encode(&self, text: &str) -> Vec<u32> {
+        self.tokenizer.encode_with_special_tokens(text)
+    }
+
+    pub fn decode(&self, tokens: &[u32]) -> String {
+        self.tokenizer
+            .decode(tokens)
+            .expect("failed to decode tokens")
     }
 }
