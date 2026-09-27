@@ -2,7 +2,20 @@
 
 Markdown document packager for AI projects.
 
-`docpack` scans Markdown documentation folders, merges documents, calculates tokens and creates AI-ready Markdown packages.
+`docpack` scans Markdown documentation folders, analyzes document collections, and creates AI-ready Markdown packages with token-aware splitting.
+
+## Overview
+
+`docpack` is designed for preparing large Markdown documentation sets for AI workflows.
+
+It provides:
+
+- Documentation inspection
+- Token estimation
+- Duplicate detection
+- Markdown packaging
+- Token-based splitting
+- Reproducible CLI workflows
 
 ## Features
 
@@ -10,7 +23,10 @@ Markdown document packager for AI projects.
 - Markdown document loading
 - Document merging with source tracking
 - Token counting using OpenAI-compatible tokenizer
-- Token based splitting
+- Token-based splitting
+- Duplicate content detection
+- Inspect reports
+- AI-ready package generation
 - CLI workflow
 - Release binary support
 
@@ -28,47 +44,96 @@ Binary:
 target/release/docpack
 ```
 
-## Usage
+## Commands
 
-Merge a documentation folder:
+### Inspect documentation
+
+Analyze a Markdown documentation directory:
 
 ```bash
-docpack merge \
-  --input ./docs \
-  --output ./package.md
+docpack inspect \
+  --input ./docs
 ```
 
-With token limit:
+Example output:
+
+```text
+Inspect Report
+--------------
+Files:      1435
+Bytes:      ...
+Tokens:     ...
+Duplicates: ...
+```
+
+### Pack documentation
+
+Create AI-ready Markdown chunks:
 
 ```bash
-docpack merge \
+docpack pack \
   --input ./docs \
-  --output ./package.md \
+  --output ./merge/package \
   --max-tokens 12000
 ```
+
+Output example:
+
+```text
+package/
+├── manifest.json
+├── part-0001.md
+├── part-0002.md
+└── ...
+```
+
+The generated package contains split Markdown files and a manifest describing the source collection.
 
 ## Pipeline
 
 ```
-Markdown files
-      |
-      v
+Markdown documentation
+          |
+          v
 Scanner
-      |
-      v
+          |
+          v
 Document reader
-      |
-      v
-Merge engine
-      |
-      v
+          |
+          v
+Inspect
+          |
+          v
 Token counter
-      |
-      v
-Splitter
-      |
-      v
-Output Markdown
+          |
+          v
+Pack splitter
+          |
+          v
+AI-ready Markdown package
+```
+
+## Example Workflow
+
+A typical documentation workflow:
+
+```text
+Website
+  |
+  v
+docsync
+  |
+  v
+Markdown files
+  |
+  v
+docpack inspect
+  |
+  v
+docpack pack
+  |
+  v
+AI-ready documentation package
 ```
 
 ## Development
